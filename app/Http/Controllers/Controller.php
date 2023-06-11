@@ -34,11 +34,14 @@ class Controller extends BaseController
     {
         $news = [];
         if ($id === null) {
-            for ($i=0; $i < 5; $i++) {
+            for ($i=0; $i < 10; $i++) {
                 $news[] = [
                     'id' => $i,
                     'title' => fake()->jobTitle(),
-                    'text' => fake()->text(100),
+                    'author' => fake()->userName(),
+                    'status' => 'draft',
+                    'description' => fake()->text(100),
+                    'created_at' => now(),
                 ];
             }
 
@@ -48,7 +51,10 @@ class Controller extends BaseController
         return [
             'id' => $id,
             'title' => fake()->jobTitle(),
-            'text' => fake()->text(100),
+            'author' => fake()->userName(),
+            'status' => 'draft',
+            'description' => fake()->text(100),
+            'created_at' => now(),
         ];
     }
 }
