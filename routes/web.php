@@ -25,7 +25,11 @@ Route::get('/news', [NewsController::class, 'index'])
 Route::get('/news/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->name('news.show');
+Route::get('/news/order', [NewsController::class, 'order'])
+    ->name('news.order');
 
+Route::post('/news/store', [NewsController::class, 'store'])
+    ->name('news.store');
 
 Route::match(["POST", 'GET', 'PUT'], '/test', function(\Illuminate\Http\Request $request) {
     return (int) $request->isMethod('GET');

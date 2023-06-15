@@ -33,7 +33,7 @@
                             <a class="nav-link active" aria-current="page" href="{{ route('admin.news.index') }}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Создать заказ</a>
+                            <a class="nav-link active" href="{{ route('news.order') }}">Создать заказ</a>
                         </li>
                     </ul>
                     <form class="d-flex mt-3" role="search">
