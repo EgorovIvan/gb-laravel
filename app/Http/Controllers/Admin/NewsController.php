@@ -15,7 +15,9 @@ class NewsController extends Controller
      */
     public function index(): View
     {
-        return view('admin.news.index');
+        $news = $this->getNews();
+
+        return view('admin.news.index', ['news' => $news]);
     }
 
     /**
@@ -34,7 +36,6 @@ class NewsController extends Controller
         $request->validate([
             'title' => ['required', 'string'],
         ]);
-
         return response()->json($request->only(['title', 'author', 'status', 'description']));
     }
 

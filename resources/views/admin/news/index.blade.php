@@ -9,4 +9,31 @@
 
         </div>
     </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>#ID</th>
+{{--                <th>Categories</th>--}}
+                <th>Title</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Date created</th>
+                <th>Actions</th>
+            </tr>
+            @foreach($news as $newsItem)
+                <tr>
+                    <td>{{ $newsItem['id'] }}</td>
+{{--                    <td>{{ $newsItem['categories'] }}</td>--}}
+                    <td>{{ $newsItem['title'] }}</td>
+                    <td>{{ $newsItem['author'] }}</td>
+                    <th>{{ $newsItem['status'] }}</th>
+                    <th>{{ $newsItem['description'] }}</th>
+                    <td>{{ $newsItem['created_at'] }}</td>
+                    <td><a href="#">Edit</a>&nbsp; <a href="#" style="color:red">Delete</a> </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
 @endsection

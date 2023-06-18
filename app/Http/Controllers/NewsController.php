@@ -19,4 +19,19 @@ class NewsController extends Controller
     {
         return view('news.show', ['newsItem' => $this->getNews($id)]);
     }
+
+    public function order(): View
+    {
+        return view('news.order');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'customer' => ['required', 'string'],
+            'phone-number' => ['required', 'string'],
+            'email' => ['required', 'string'],
+        ]);
+        return response()->json($request->only(['customer', 'phone-number', 'email', 'info']));
+    }
 }
