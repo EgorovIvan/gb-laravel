@@ -5,19 +5,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     public function index(): View
     {
-        $news = $this->getNews();
+        $news = DB::table('news')->get();
 
         return view('news.index', ['news' => $news]);
     }
 
     public function show(int $id): View
     {
-        return view('news.show', ['newsItem' => $this->getNews($id)]);
+        $news = DB::table('news')->find($id);
+
+        if (empty($news)) {
+            return redirect()->route('news');
+        }
+
+        return view('news.show', ['newsItem' => $news]);
     }
 
     public function order(): View

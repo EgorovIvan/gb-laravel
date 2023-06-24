@@ -19,7 +19,7 @@
                 <input type="number" name="phone-number" id="phone-number" class="form-control" value="{{ old('phone-number') }}"/>
             </div>
             <div class="form-group">
-                <label for="email">Имя заказчика</label>
+                <label for="email">Email</label>
                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}"/>
             </div>
             <div class="form-group">

@@ -7,6 +7,13 @@ use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use Illuminate\Support\Facades\Route;
 
+//Route::get('/', function () {
+//    return view('index');
+//});
+//Route::get('/', function () {
+//    return 'Hello World';
+//});
+
 Route::get('/', [HomeController::class, 'index'])
     ->name('main.index');
 
