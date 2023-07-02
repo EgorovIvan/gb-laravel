@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class NewsController extends Controller
@@ -15,7 +16,7 @@ class NewsController extends Controller
      */
     public function index(): View
     {
-        $news = $this->getNews();
+        $news = DB::table('news')->get();
 
         return view('admin.news.index', ['news' => $news]);
     }

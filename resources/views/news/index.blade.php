@@ -13,15 +13,15 @@
                         </svg>
 
                         <div class="card-body">
-                            <p><strong><a href="{{ route('news.show', ['id' => $newsItem['id']]) }}">{{ $newsItem['title'] }}</a></strong></p>
+                            <p><strong><a href="{{ route('news.show', ['id' => $newsItem->id]) }}">{{ $newsItem->title }}</a></strong></p>
                             <p class="card-text">
-                                {!! $newsItem['description'] !!}
+                                {!! $newsItem->description !!}
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a href="{{ route('news.show', ['id' => $newsItem['id']]) }}" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                                    <a href="{{ route('news.show', ['id' => $newsItem->id]) }}" type="button" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                                 </div>
-                                <small class="text-muted">{{ $newsItem['author'] }} ({{ $newsItem['created_at'] }})</small>
+                                <small class="text-muted">{{ $newsItem->author }} ({{ $newsItem->created_at }})</small>
                             </div>
                         </div>
                     </div>

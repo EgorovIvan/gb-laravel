@@ -9,4 +9,25 @@
 
         </div>
     </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>#ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date created</th>
+                <th>Actions</th>
+            </tr>
+            @foreach($categories as $categoriesItem)
+                <tr>
+                    <td>{{ $categoriesItem->id }}</td>
+                    <td>{{ $categoriesItem->title }}</td>
+                    <th>{{ $categoriesItem->description }}</th>
+                    <td>{{ $categoriesItem->created_at }}</td>
+                    <td><a href="#">Edit</a>&nbsp; <a href="#" style="color:red">Delete</a> </td>
+                </tr>
+            @endforeach
+        </table>
+    </div>
 @endsection
