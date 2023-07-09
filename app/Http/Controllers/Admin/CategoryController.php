@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\Store;
+use App\Http\Requests\Category\Update;
 use App\Models\Category;
 use App\Queries\CategoriesQueryBuilder;
 use App\Queries\QueryBuilder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -41,19 +45,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        $request->validate([
-            'title' => ['required', 'string'],
-        ]);
-
-        $category = $request->only([ 'title', 'description']);
-        $category = Category::create($category);
-        if ($category !== false) {
-            return \redirect()->route('admin.categories.index')->with('success', 'Category has been create');
+        $category = Category::create($request->validated());
+        if ($category) {
+            return \redirect()->route('admin.categories.index')->with('success', __('Category has been created'));
         }
 
-        return \back()->with('error', 'Category has not been create');
+        return \back()->with('error', __('Category has not been created'));
     }
 
     /**
@@ -77,21 +76,29 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category): RedirectResponse
+    public function update(Update $request, Category $category): RedirectResponse
     {
-        $category = $category->fill($request->only(['title', 'description']));
+        $category = $category->fill($request->validated());
         if ($category->save()) {
-            return \redirect()->route('admin.categories.index')->with('success', 'Category has been update');
+            return \redirect()->route('admin.categories.index')->with('success', __('Category has been updated'));
         }
 
-        return \back()->with('error', 'Category has not been update');
+        return \back()->with('error', __('Category has not been updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category): JsonResponse
     {
-        //
+        try {
+            $category->delete();
+
+            return  \response()->json('ok');
+        } catch (\Throwable $exception) {
+            Log::error($exception->getMessage(), $exception->getTrace());
+
+            return  response()->json('error', 400);
+        }
     }
 }

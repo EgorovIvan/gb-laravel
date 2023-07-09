@@ -35,29 +35,30 @@
         <div class="form-group">
             <label for="title">Заголовок</label>
             <input type="text" name="title" id="title" class="form-control" value="{{ $news->title }}"/>
+            @error('title') <strong style="color:red" type="danger" >{{$message}}</strong> @enderror
         </div>
         <div class="form-group">
             <label for="author">Автор</label>
             <input type="text" name="author" id="author" class="form-control" value="{{ $news->author }}"/>
+            @error('author') <strong style="color:red" type="danger" >{{$message}}</strong> @enderror
         </div>
         <div class="form-group">
             <label for="image">Изображение</label>
             <input type="file" name="image" id="image" class="form-control" />
         </div>
+
         <div class="form-group">
             <label for="status">Статус</label>
             <select class="form-control" name="status" id="status">
-                <option @if($news->status === 'DRAFT') selected @endif>DRAFT</option>
-                <option @if($news->status === 'ACTIVE') selected @endif>ACTIVE</option>
-                <option @if($news->status === 'BLOCKED') selected @endif>BLOCKED</option>
+                <option @if($news->status === 'draft') selected @endif value="{{ \App\Enums\NewsStatus::DRAFT->value }}">DRAFT</option>
+                <option @if($news->status === 'active') selected @endif value="{{ \App\Enums\NewsStatus::ACTIVE->value }}">ACTIVE</option>
+                <option @if($news->status === 'blocked') selected @endif value="{{ \App\Enums\NewsStatus::BLOCKED->value }}">BLOCKED</option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="description">Описание</label>
-            <textarea class="form-control" name="description" id="description">{!! $news->description !!}</textarea>
+            <textarea type="text" name="description" id="description" class="form-control" >{{$news->description}}</textarea>
         </div>
-
         <br />
         <button type="submit" class="btn btn-success">Cохранить</button>
     </form>
