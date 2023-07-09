@@ -1,29 +1,23 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\News;
+use App\Queries\NewsQueryBuilder;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
-class NewsController extends Controller
+final class NewsController extends Controller
 {
-    public function index(): View
+    public function index(NewsQueryBuilder $newsQueryBuilder): View
     {
-        $news = DB::table('news')->get();
-
-        return view('news.index', ['news' => $news]);
+        return view('news.index', ['news' => $newsQueryBuilder->getActiveNews()]);
     }
 
-    public function show(int $id): View
+    public function show(News $news): View
     {
-        $news = DB::table('news')->find($id);
-
-        if (empty($news)) {
-            return redirect()->route('news');
-        }
-
         return view('news.show', ['newsItem' => $news]);
     }
 

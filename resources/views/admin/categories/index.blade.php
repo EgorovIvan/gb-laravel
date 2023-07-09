@@ -19,13 +19,13 @@
                 <th>Date created</th>
                 <th>Actions</th>
             </tr>
-            @foreach($categories as $categoriesItem)
+            @foreach($categoryList as $categoriesItem)
                 <tr>
                     <td>{{ $categoriesItem->id }}</td>
                     <td>{{ $categoriesItem->title }}</td>
                     <th>{{ $categoriesItem->description }}</th>
                     <td>{{ $categoriesItem->created_at }}</td>
-                    <td><a href="#">Edit</a>&nbsp; <a href="#" style="color:red">Delete</a> </td>
+                    <<td><a href="{{ route('admin.categories.edit', ['category' => $categoriesItem]) }}">Edit</a> <a href="#" style="color:red">Delete</a> </td>
                 </tr>
             @endforeach
         </table>

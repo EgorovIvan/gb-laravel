@@ -6,14 +6,14 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DataSourseSeeder extends Seeder
+class DataSourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('data_sources')->insert($this->getData());
+        DB::table('data-sources')->insert($this->getData());
     }
 
     public function getData(): array
