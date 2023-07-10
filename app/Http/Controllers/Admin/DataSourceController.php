@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DataSource\Store;
+use App\Http\Requests\DataSource\Update;
 use App\Models\DataSource;
 use App\Queries\DataSourcesQueryBuilder;
 use App\Queries\QueryBuilder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DataSourceController extends Controller
 {
@@ -41,19 +45,14 @@ class DataSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        $request->validate([
-            'name' => ['required', 'string'],
-        ]);
-
-        $resource = $request->only([ 'name', 'description']);
-        $resource = DataSource::create($resource);
-        if ($resource !== false) {
-                return \redirect()->route('admin.data-sources.index')->with('success', 'Resource has been create');
+        $resource = DataSource::create($request->validated());
+        if ($resource) {
+                return \redirect()->route('admin.data-sources.index')->with('success', __('Resource has been created'));
         }
 
-        return \back()->with('error', 'Resource has not been create');
+        return \back()->with('error', __('Resource has not been created'));
     }
 
     /**
@@ -67,31 +66,39 @@ class DataSourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DataSource $data_source): View
+    public function edit(DataSource $dataSource): View
     {
         return \view('admin.data-sources.edit', [
-            'data_source' => $data_source,
+            'data_source' => $dataSource,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DataSource $data_source): RedirectResponse
+    public function update(Update $request, DataSource $dataSource): RedirectResponse
     {
-        $data_source = $data_source->fill($request->only(['name', 'description']));
-        if ($data_source->save()) {
-            return \redirect()->route('admin.data-sources.index')->with('success', 'Resource has been update');
+        $dataSource = $dataSource->fill($request->validated());
+        if ($dataSource->save()) {
+            return \redirect()->route('admin.data-sources.index')->with('success', __('Resource has been updated'));
         }
 
-        return \back()->with('error', 'Resource has not been update');
+        return \back()->with('error', __('Resource has not been update'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DataSource $dataSource): JsonResponse
     {
-        //
+        try {
+            $dataSource->delete();
+
+            return  \response()->json('ok');
+        } catch (\Throwable $exception) {
+            Log::error($exception->getMessage(), $exception->getTrace());
+
+            return  response()->json('error', 400);
+        }
     }
 }

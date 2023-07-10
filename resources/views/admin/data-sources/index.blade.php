@@ -23,12 +23,44 @@
                 <tr>
                     <td>{{ $resourceItem->id }}</td>
                     <td>{{ $resourceItem->name }}</td>
-                    <th>{{ $resourceItem->description }}</th>
+                    <td>{{ $resourceItem->description }}</td>
                     <td>{{ $resourceItem->created_at }}</td>
-                    <td><a href="{{ route('admin.data-sources.edit', ['data_source' => $resourceItem]) }}">Edit</a>&nbsp; <a href="javascript:;" style="color:red">Delete</a> </td>
+                    <td><a href="{{ route('admin.data-sources.edit', ['data_source' => $resourceItem]) }}">Edit</a>&nbsp; <a class="delete" href="javascript:;" style="color:red" rel="{{$resourceItem->id}}">Delete</a> </td>
                 </tr>
             @endforeach
         </table>
 
     </div>
 @endsection
+"@push('js')
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            let items = document.querySelectorAll(".delete")
+            items.forEach(function (item, key) {
+                item.addEventListener('click', function () {
+                    const id = this.getAttribute('rel');
+                    if(confirm(`Подтвердить удаление источника с #ID = ${id}`)) {
+                        send(`/admin/data-sources/${id}`).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        alert("Отменено");
+                    }
+                })
+            })
+        })
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+
+            let result = await response.json();
+            return result.ok;
+        }
+    </script>
+@endpush

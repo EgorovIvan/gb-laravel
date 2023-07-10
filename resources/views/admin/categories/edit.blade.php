@@ -19,6 +19,7 @@
         <div class="form-group">
             <label for="title">Заголовок</label>
             <input type="text" name="title" id="title" class="form-control" value="{{ $category->title }}"/>
+            @error('title') <strong style="color:red" type="danger" >{{$message}}</strong> @enderror
         </div>
         <div class="form-group">
             <label for="description">Описание</label>

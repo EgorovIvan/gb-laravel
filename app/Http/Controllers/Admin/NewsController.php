@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\Store;
+use App\Http\Requests\News\Update;
 use App\Models\News;
 use App\Queries\CategoriesQueryBuilder;
 use App\Queries\DataSourcesQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\QueryBuilder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NewsController extends Controller
 {
@@ -53,27 +57,17 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Store $request): RedirectResponse
     {
-        $request->validate([
-            'title' => ['required', 'string'],
-        ]);
+        $news = News::create($request->validated());
+        if ($news) {
+                $news->categories()->attach($request->getCategories());
+                $news->data_sources()->attach($request->getDataSources());
 
-        $categories = $request->input('categories');
-        $data_sources = $request->input('data_sources');
-
-        $news = $request->only([ 'title', 'author', 'status', 'description']);
-        $news = News::create($news);
-        if ($news !== false) {
-            if ($categories !== null && $data_sources !== null ) {
-                $news->categories()->attach($categories);
-                $news->data_sources()->attach($data_sources);
-
-                return \redirect()->route('admin.news.index')->with('success', 'News has been create');
-            }
+                return \redirect()->route('admin.news.index')->with('success', __('News has been created'));
         }
 
-        return \back()->with('error', 'News has not been create');
+        return \back()->with('error', __('News has not been created'));
     }
 
     /**
@@ -99,27 +93,32 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news): RedirectResponse
+    public function update(Update $request, News $news): RedirectResponse
     {
-        $categories = $request->input('categories');
-        $data_sources = $request->input('data_sources');
-
-        $news = $news->fill($request->only(['title', 'author', 'status', 'description']));
+        $news = $news->fill($request->validated());
         if ($news->save()) {
-            $news->categories()->sync($categories);
-            $news->data_sources()->sync($data_sources);
+            $news->categories()->sync($request->getCategories());
+            $news->data_sources()->sync($request->getDataSources());
 
-            return \redirect()->route('admin.news.index')->with('success', 'News has been update');
+            return \redirect()->route('admin.news.index')->with('success', __('News has been updated'));
         }
 
-        return \back()->with('error', 'News has not been update');
+        return \back()->with('error', __('News has not been updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(News $news)
+    public function destroy(News $news): JsonResponse
     {
+        try {
+            $news->delete();
 
+            return  \response()->json('ok');
+        } catch (\Throwable $exception) {
+            Log::error($exception->getMessage(), $exception->getTrace());
+
+            return  response()->json('error', 400);
+        }
     }
 }
