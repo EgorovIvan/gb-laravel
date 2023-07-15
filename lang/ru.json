@@ -10,5 +10,16 @@
     "Resource has been updated": "Источник успешно обновлен",
     "Resource has not been updated": "Ошибка обновления источника",
     "Resource has been created": "Источник успешно создан",
-    "Resource has not been created": "Ошибка создания источника"
+    "Resource has not been created": "Ошибка создания источника",
+    "Profile has been updated": "Профиль успешно обновлен",
+    "Profile has not been updated": "Ошибка обновления профиля",
+    "Register": "Регистрация",
+    "Name": "Имя",
+    "Email Address": "Email адрес",
+    "Password": "Пароль",
+    "Confirm Password": "Повторите пароль",
+    "Login": "Вход",
+    "Remember Me": "Запомнить меня",
+    "Forgot Your Password?": "Забыли пароль?",
+    "Account": "Панель управления"
 }
