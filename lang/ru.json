@@ -1,0 +1,14 @@
+{
+    "News has been updated": "Запись успешно обновлена",
+    "News has not been updated": "Ошибка обновления записи",
+    "News has been created": "Запись успешно создана",
+    "News has not been created": "Ошибка создания записи",
+    "Category has been updated": "Категория успешно обновлена",
+    "Category has not been updated": "Ошибка обновления категории",
+    "Category has been created": "Категория успешно создана",
+    "Category has not been created": "Ошибка создания категории",
+    "Resource has been updated": "Источник успешно обновлен",
+    "Resource has not been updated": "Ошибка обновления источника",
+    "Resource has been created": "Источник успешно создан",
+    "Resource has not been created": "Ошибка создания источника"
+}
