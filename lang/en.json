@@ -10,5 +10,7 @@
     "Resource has been updated": "Resource has been updated",
     "Resource has not been updated": "Resource has not been updated",
     "Resource has been created": "Resource has been created",
-    "Resource has not been created": "Resource has not been created"
+    "Resource has not been created": "Resource has not been created",
+    "Profile has been updated": "Profile has been updated",
+    "Profile has not been updated": "Profile has not been updated"
 }
