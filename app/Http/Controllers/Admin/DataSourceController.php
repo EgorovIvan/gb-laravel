@@ -20,14 +20,14 @@ class DataSourceController extends Controller
 {
     protected QueryBuilder $dataSourcesQueryBuilder;
     public function __construct(
-        DataSourcesQueryBuilder $dataSourcesQueryBuilder,
+        DataSourcesQueryBuilder $dataSourcesQueryBuilder
     ) {
         $this->dataSourcesQueryBuilder = $dataSourcesQueryBuilder;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         return view('admin.data-sources.index', [
             'resourceList' => $this->dataSourcesQueryBuilder->getAll(),
@@ -37,7 +37,7 @@ class DataSourceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.data-sources.create');
     }
@@ -45,14 +45,14 @@ class DataSourceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Store $request)
+    public function store(Store $request): RedirectResponse
     {
         $resource = DataSource::create($request->validated());
         if ($resource) {
-                return \redirect()->route('admin.data-sources.index')->with('success', __('Resource has been created'));
+                return redirect()->route('admin.data-sources.index')->with('success', __('Resource has been created'));
         }
 
-        return \back()->with('error', __('Resource has not been created'));
+        return back()->with('error', __('Resource has not been created'));
     }
 
     /**
@@ -68,7 +68,7 @@ class DataSourceController extends Controller
      */
     public function edit(DataSource $dataSource): View
     {
-        return \view('admin.data-sources.edit', [
+        return view('admin.data-sources.edit', [
             'data_source' => $dataSource,
         ]);
     }
@@ -80,10 +80,10 @@ class DataSourceController extends Controller
     {
         $dataSource = $dataSource->fill($request->validated());
         if ($dataSource->save()) {
-            return \redirect()->route('admin.data-sources.index')->with('success', __('Resource has been updated'));
+            return redirect()->route('admin.data-sources.index')->with('success', __('Resource has been updated'));
         }
 
-        return \back()->with('error', __('Resource has not been update'));
+        return back()->with('error', __('Resource has not been update'));
     }
 
     /**
@@ -94,7 +94,7 @@ class DataSourceController extends Controller
         try {
             $dataSource->delete();
 
-            return  \response()->json('ok');
+            return  response()->json('ok');
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
 
