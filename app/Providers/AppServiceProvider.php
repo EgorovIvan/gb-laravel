@@ -9,6 +9,10 @@ use App\Queries\DataSourcesQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\ProfilesQueryBuilder;
 use App\Queries\QueryBuilder;
+use App\Services\Contracts\Parser;
+use App\Services\Contracts\Social;
+use App\Services\ParserService;
+use App\Services\SocialService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(QueryBuilder::class, NewsQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, DataSourcesQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, ProfilesQueryBuilder::class);
+
+        // Services
+
+        $this->app->bind(Parser::class, ParserService::class);
+        $this->app->bind(Parser::class, ParserService::class);
+        $this->app->bind(Social::class, SocialService::class);
     }
 
     /**

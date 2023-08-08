@@ -19,14 +19,14 @@ class CategoryController extends Controller
 {
     protected QueryBuilder $categoriesQueryBuilder;
     public function __construct(
-        CategoriesQueryBuilder $categoriesQueryBuilder,
+        CategoriesQueryBuilder $categoriesQueryBuilder
     ) {
         $this->categoriesQueryBuilder = $categoriesQueryBuilder;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         return view('admin.categories.index', [
             'categoryList' => $this->categoriesQueryBuilder->getAll(),
@@ -36,7 +36,7 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.categories.create');
     }
@@ -44,14 +44,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Store $request)
+    public function store(Store $request): RedirectResponse
     {
         $category = Category::create($request->validated());
         if ($category) {
-            return \redirect()->route('admin.categories.index')->with('success', __('Category has been created'));
+            return redirect()->route('admin.categories.index')->with('success', __('Category has been created'));
         }
 
-        return \back()->with('error', __('Category has not been created'));
+        return back()->with('error', __('Category has not been created'));
     }
 
     /**
@@ -67,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category): View
     {
-        return \view('admin.categories.edit', [
+        return view('admin.categories.edit', [
             'category' => $category,
         ]);
     }
@@ -79,10 +79,10 @@ class CategoryController extends Controller
     {
         $category = $category->fill($request->validated());
         if ($category->save()) {
-            return \redirect()->route('admin.categories.index')->with('success', __('Category has been updated'));
+            return redirect()->route('admin.categories.index')->with('success', __('Category has been updated'));
         }
 
-        return \back()->with('error', __('Category has not been updated'));
+        return back()->with('error', __('Category has not been updated'));
     }
 
     /**
@@ -93,7 +93,7 @@ class CategoryController extends Controller
         try {
             $category->delete();
 
-            return  \response()->json('ok');
+            return  response()->json('ok');
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
 

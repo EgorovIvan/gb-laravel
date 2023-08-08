@@ -18,14 +18,14 @@ class ProfileController extends Controller
 {
     protected QueryBuilder $profilesQueryBuilder;
     public function __construct(
-        ProfilesQueryBuilder $profilesQueryBuilder,
+        ProfilesQueryBuilder $profilesQueryBuilder
     ) {
         $this->profilesQueryBuilder = $profilesQueryBuilder;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         return view('admin.users.index', [
             'userList' => $this->profilesQueryBuilder->getAll(),
@@ -45,7 +45,7 @@ class ProfileController extends Controller
      */
     public function edit(User $user): View
     {
-        return \view('admin.users.edit', [
+        return view('admin.users.edit', [
             'user' => $user,
         ]);
     }
@@ -57,10 +57,10 @@ class ProfileController extends Controller
     {
         $user = $user->fill($request->validated());
         if ($user->save()) {
-            return \redirect()->route('admin.users.index')->with('success', __('Profile has been updated'));
+            return redirect()->route('admin.users.index')->with('success', __('Profile has been updated'));
         }
 
-        return \back()->with('error', __('Profile has not been updated'));
+        return back()->with('error', __('Profile has not been updated'));
     }
 
     /**
@@ -71,7 +71,7 @@ class ProfileController extends Controller
         try {
             $user->delete();
 
-            return  \response()->json('ok');
+            return  response()->json('ok');
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
 

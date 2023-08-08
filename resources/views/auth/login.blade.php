@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
+                <br/>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -62,6 +63,8 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                                <a href="{{ route('social-providers.redirect', ['driver' => 'github']) }}">Login Github</a>
                             </div>
                         </div>
                     </form>

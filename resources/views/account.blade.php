@@ -16,6 +16,9 @@
 
                         <h2>Hello, {{Auth::user()->name }}</h2>
                         <br>
+                            @if(Auth::user()->avatar)
+                                <img src="{{ Auth::user()->avatar}}" style="width: 100px"/>
+                            @endif
                         @if(Auth::user()->isAdmin)
                             <p><a href="{{route('admin.index')}}">Панель админа</a></p>
                         @endif

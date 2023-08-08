@@ -48,7 +48,7 @@ class NewsController extends Controller
      */
     public function create(): View
     {
-        return \view('admin.news.create', [
+        return view('admin.news.create', [
             'categories' => $this->categoriesQueryBuilder->getAll(),
             'data_sources' => $this->dataSourcesQueryBuilder->getAll(),
         ]);
@@ -64,10 +64,10 @@ class NewsController extends Controller
                 $news->categories()->attach($request->getCategories());
                 $news->data_sources()->attach($request->getDataSources());
 
-                return \redirect()->route('admin.news.index')->with('success', __('News has been created'));
+                return redirect()->route('admin.news.index')->with('success', __('News has been created'));
         }
 
-        return \back()->with('error', __('News has not been created'));
+        return back()->with('error', __('News has not been created'));
     }
 
     /**
@@ -83,7 +83,7 @@ class NewsController extends Controller
      */
     public function edit(News $news): View
     {
-        return \view('admin.news.edit', [
+        return view('admin.news.edit', [
             'news' => $news,
             'categories' => $this->categoriesQueryBuilder->getAll(),
             'data_sources' => $this->dataSourcesQueryBuilder->getAll(),
@@ -100,10 +100,10 @@ class NewsController extends Controller
             $news->categories()->sync($request->getCategories());
             $news->data_sources()->sync($request->getDataSources());
 
-            return \redirect()->route('admin.news.index')->with('success', __('News has been updated'));
+            return redirect()->route('admin.news.index')->with('success', __('News has been updated'));
         }
 
-        return \back()->with('error', __('News has not been updated'));
+        return back()->with('error', __('News has not been updated'));
     }
 
     /**
@@ -114,7 +114,7 @@ class NewsController extends Controller
         try {
             $news->delete();
 
-            return  \response()->json('ok');
+            return  response()->json('ok');
         } catch (\Throwable $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
 
