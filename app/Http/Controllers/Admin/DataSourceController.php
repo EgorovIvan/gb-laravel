@@ -29,7 +29,7 @@ class DataSourceController extends Controller
      */
     public function index(): View
     {
-        return view('admin.data-sources.index', [
+        return view('admin.data_sources.index', [
             'resourceList' => $this->dataSourcesQueryBuilder->getAll(),
         ]);
     }
@@ -39,7 +39,7 @@ class DataSourceController extends Controller
      */
     public function create(): View
     {
-        return view('admin.data-sources.create');
+        return view('admin.data_sources.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class DataSourceController extends Controller
     {
         $resource = DataSource::create($request->validated());
         if ($resource) {
-                return redirect()->route('admin.data-sources.index')->with('success', __('Resource has been created'));
+                return redirect()->route('admin.data_sources.index')->with('success', __('Resource has been created'));
         }
 
         return back()->with('error', __('Resource has not been created'));
@@ -68,7 +68,7 @@ class DataSourceController extends Controller
      */
     public function edit(DataSource $dataSource): View
     {
-        return view('admin.data-sources.edit', [
+        return view('admin.data_sources.edit', [
             'data_source' => $dataSource,
         ]);
     }
@@ -80,7 +80,7 @@ class DataSourceController extends Controller
     {
         $dataSource = $dataSource->fill($request->validated());
         if ($dataSource->save()) {
-            return redirect()->route('admin.data-sources.index')->with('success', __('Resource has been updated'));
+            return redirect()->route('admin.data_sources.index')->with('success', __('Resource has been updated'));
         }
 
         return back()->with('error', __('Resource has not been update'));

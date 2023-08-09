@@ -15,7 +15,6 @@ class Store extends FormRequest
      */
     public function authorize(): bool
     {
-
         return true;
     }
 

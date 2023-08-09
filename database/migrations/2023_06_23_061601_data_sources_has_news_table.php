@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('data_sources_has_news', static function (Blueprint $table): void {
             $table->foreignId('data_source_id')
                 ->references('id')
-                ->on('data-sources')
+                ->on('data_sources')
                 ->cascadeOnDelete();
 
             $table->foreignId('news_id')

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\NewsParsingJob;
 use Illuminate\Http\Request;
 use App\Services\Contracts\Parser;
 
@@ -15,10 +16,20 @@ class ParserController extends Controller
      */
     public function __invoke(Request $request, Parser $parser): string
     {
-        $url = "https://news.rambler.ru/rss/tech/";
+        $urls = [
+            "https://news.rambler.ru/rss/tech",
+            "https://news.rambler.ru/rss/world",
+            "https://news.rambler.ru/rss/games",
+            "https://news.rambler.ru/rss/community",
+            "https://news.rambler.ru/rss/articles",
+            "https://news.rambler.ru/rss/Austria/",
+            "https://news.rambler.ru/rss/Italy/"
+        ];
 
-        $parser->setLink($url)->saveParseData();
+        foreach ($urls as $url) {
+            dispatch(new NewsParsingJob($url));
+        }
 
-        return "Data saved";
+        return "News saved";
     }
 }

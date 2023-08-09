@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], static function () {
         Route::get('/exchange', ExchangeParserController::class)->name('exchange');
         Route::resource('/categories', AdminCategoryController::class);
         Route::resource('/news', AdminNewsController::class);
-        Route::resource('/data-sources', AdminDataSourceController::class);
+        Route::resource('/data_sources', AdminDataSourceController::class);
         Route::resource('/users', AdminProfileController::class);
     });
 });
