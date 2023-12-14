@@ -42,7 +42,7 @@
         {{ $newsList->links() }}
     </div>
 @endsection
-"@push('js')
+@push('js')
      <script type="text/javascript">
          document.addEventListener('DOMContentLoaded', function () {
              let items = document.querySelectorAll(".delete")

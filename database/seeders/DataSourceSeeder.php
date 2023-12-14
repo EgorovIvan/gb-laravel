@@ -13,7 +13,7 @@ class DataSourceSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('data-sources')->insert($this->getData());
+        DB::table('data_sources')->insert($this->getData());
     }
 
     public function getData(): array
